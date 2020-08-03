@@ -51,7 +51,7 @@ jobs:
       run: docker-compose build
 
     - name: Run ci.sh
-      run: docker-compose run --rm -u web web sh ./docker/ci.sh
+      run: docker-compose run --rm web sh ./docker/ci.sh
 
     - name: Push docker image
       run: |
