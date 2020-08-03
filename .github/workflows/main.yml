@@ -33,6 +33,7 @@ jobs:
       run: |
         pip3 install dump-env docker-image-size-limit
         dump-env -t config/.env.template -p 'SECRET_' > config/.env
+        echo ${{ secrets.GITHUB_TOKEN }} | docker login -u docker.pkg.github.com --password-stdin
         docker info && docker-compose --version && git --version
 
     - name: Checking config
@@ -40,5 +41,6 @@ jobs:
     
     - name: The logic itself
       run: |
+        docker pull "docker.pkg.github.com/iamilyagurin/sls/sls:dev" || true
+        docker tag "docker.pkg.github.com/iamilyagurin/sls/sls:dev" "sls:dev" || true
         docker-compose build
-        docker-compose run --rm web sh ./docker/ci.sh
