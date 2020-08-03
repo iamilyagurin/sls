@@ -32,5 +32,6 @@ jobs:
       run: |
         echo Add other actions to build,
         echo test, and deploy your project.
-        docker
-        docker-compose
+        
+    - name: Checking config
+      run: docker-compose -f docker-compose.yml -f docker/docker-compose.prod.yml config --quiet
