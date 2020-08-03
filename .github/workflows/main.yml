@@ -22,31 +22,38 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
-    
+
     - name: Setup Python
       uses: actions/setup-python@v2
       with:
         # Version range or exact version of a Python version to use, using SemVer's version range syntax.
         python-version: 3
-    
+
     - name: Installing global dependencies
       run: |
         pip3 install dump-env docker-image-size-limit
         dump-env -t config/.env.template -p 'SECRET_' > config/.env
         docker info && docker-compose --version && git --version
         echo "${{ secrets.GITHUB_TOKEN }}"
-    
+
     - name: Login docker registry
       run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u iamilyagurin --password-stdin
 
     - name: Checking config
       run: docker-compose -f docker-compose.yml -f docker/docker-compose.prod.yml config --quiet
-    
-    - name: The logic itself
+
+    - name: Pull docker image
       run: |
         docker pull "docker.pkg.github.com/iamilyagurin/sls/sls:dev" || true
         docker tag "docker.pkg.github.com/iamilyagurin/sls/sls:dev" "sls:dev" || true
-        docker-compose build
-        docker-compose run --rm web sh ./docker/ci.sh
+
+    - name: Build docker image
+      run: docker-compose build
+
+    - name: Run ci.sh
+      run: docker-compose run --rm -u web web sh ./docker/ci.sh
+
+    - name: Push docker image
+      run: |
         docker tag "sls:dev" "docker.pkg.github.com/iamilyagurin/sls/sls:dev"
         docker push "docker.pkg.github.com/iamilyagurin/sls/sls:dev"
