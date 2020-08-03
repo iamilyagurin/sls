@@ -47,3 +47,5 @@ jobs:
         docker pull "docker.pkg.github.com/iamilyagurin/sls/sls:dev" || true
         docker tag "docker.pkg.github.com/iamilyagurin/sls/sls:dev" "sls:dev" || true
         docker-compose build
+        docker tag "sls:dev" "docker.pkg.github.com/iamilyagurin/sls/sls:dev"
+        docker push "docker.pkg.github.com/iamilyagurin/sls/sls:dev"
