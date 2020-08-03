@@ -31,7 +31,9 @@ jobs:
     
     - name: Installing global dependencies
       run: |
-        pip3 install dump-env docker-image-size-limit 'docker-compose<1.24'
+        pip3 install dump-env docker-image-size-limit
         dump-env -t config/.env.template -p 'SECRET_' > config/.env
         docker info && docker-compose --version && git --version
 
+    - name: Checking config
+      run: docker-compose -f docker-compose.yml -f docker/docker-compose.prod.yml config --quiet
