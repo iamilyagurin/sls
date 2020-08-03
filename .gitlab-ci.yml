@@ -46,8 +46,7 @@ test:
     - *docker-before-script
   script:
     # Checking config:
-    - docker-compose -f docker-compose.yml
-      -f docker/docker-compose.prod.yml config --quiet
+    - docker-compose -f docker-compose.yml -f docker/docker-compose.prod.yml config --quiet
 
     # Pulling cache:
     - docker pull "${IMAGE_FULL_NAME}:dev" || true

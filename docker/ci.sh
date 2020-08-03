@@ -86,6 +86,7 @@ run_ci () {
   echo '[ci finished]'
 }
 
+ls -l
 # Remove any cache before the script:
 pyclean
 
