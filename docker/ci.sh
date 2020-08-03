@@ -68,7 +68,7 @@ run_ci () {
   doc8 -q docs
 
   # Checking `yaml` files:
-  yamllint -d '{"extends": "default", "ignore": ".venv"}' -s .
+  yamllint -d yamllint.yml -s .
 
   # Checking `.env` files:
   dotenv-linter config/.env config/.env.template
