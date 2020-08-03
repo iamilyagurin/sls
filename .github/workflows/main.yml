@@ -37,3 +37,8 @@ jobs:
 
     - name: Checking config
       run: docker-compose -f docker-compose.yml -f docker/docker-compose.prod.yml config --quiet
+    
+    - name: The logic itself
+      run: |
+        docker-compose build
+        docker-compose run --rm web sh ./docker/ci.sh
