@@ -33,8 +33,11 @@ jobs:
       run: |
         pip3 install dump-env docker-image-size-limit
         dump-env -t config/.env.template -p 'SECRET_' > config/.env
-        echo ${{ secrets.GITHUB_TOKEN }} | docker login -u docker.pkg.github.com --password-stdin
         docker info && docker-compose --version && git --version
+        echo "${{ secrets.GITHUB_TOKEN }}"
+    
+    - name: Login docker registry
+      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u iamilyagurin --password-stdin
 
     - name: Checking config
       run: docker-compose -f docker-compose.yml -f docker/docker-compose.prod.yml config --quiet
