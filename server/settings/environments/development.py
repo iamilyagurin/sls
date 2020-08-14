@@ -54,7 +54,8 @@ MIDDLEWARE += (
 
 def custom_show_toolbar(request):
     """Only show the debug toolbar to users with the superuser flag."""
-    return request.user.is_superuser
+    from django.conf import settings
+    return request.user.is_superuser and settings.DEBUG
 
 
 DEBUG_TOOLBAR_CONFIG = {

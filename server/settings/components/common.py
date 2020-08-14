@@ -25,6 +25,7 @@ SECRET_KEY = config('DJANGO_SECRET_KEY')
 INSTALLED_APPS: Tuple[str, ...] = (
     # Your apps go here:
     'server.apps.main',
+    'server.apps.authentication',
 
     # Default django apps:
     'django.contrib.auth',
@@ -200,3 +201,6 @@ FEATURE_POLICY: Dict[str, Union[str, List[str]]] = {}  # noqa: WPS234
 
 # Timeouts
 EMAIL_TIMEOUT = 5
+
+# Custom User Model
+AUTH_USER_MODEL = 'authentication.User'
