@@ -171,7 +171,7 @@ MEDIA_ROOT = BASE_DIR.joinpath('media')
 
 AUTHENTICATION_BACKENDS = (
     'axes.backends.AxesBackend',
-    'django.contrib.auth.backends.ModelBackend',
+    'server.apps.authentication.backends.CustomBackend',
 )
 
 PASSWORD_HASHERS = [

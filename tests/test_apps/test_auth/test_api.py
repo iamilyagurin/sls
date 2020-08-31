@@ -8,7 +8,7 @@ from tests.fixtures import UserFactory
 
 def test_get_auth_token(transactional_db, api_client):
     password = faker.password()
-    user = UserFactory()
+    user = UserFactory.build()
     user.set_password(password)
     user.save()
 
