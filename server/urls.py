@@ -19,6 +19,7 @@ from health_check import urls as health_urls
 
 from server.apps.main import urls as main_urls
 from server.apps.main.views import index
+from server.apps.authentication.views import ObtainAuthToken
 
 admin.autodiscover()
 
@@ -46,6 +47,7 @@ urlpatterns = [
 
     # It is a good practice to have explicit index view:
     path('', index, name='index'),
+    path('auth-token/', ObtainAuthToken.as_view(), name='auth-token')
 ]
 
 if settings.DEBUG:  # pragma: no cover

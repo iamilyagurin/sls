@@ -1,14 +1,17 @@
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin, UserManager
+from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.core.mail import send_mail
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-from django.contrib.auth.validators import UnicodeUsernameValidator
-
 
 
 class User(AbstractBaseUser, PermissionsMixin):
+    class Meta:
+        db_table = "user"
+        verbose_name = _('user')
+        verbose_name_plural = _('users')
 
     username_validator = UnicodeUsernameValidator()
 
@@ -46,9 +49,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']
 
-    class Meta:
-        verbose_name = _('user')
-        verbose_name_plural = _('users')
 
     def clean(self):
         super().clean()
