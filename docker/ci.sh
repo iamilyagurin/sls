@@ -30,14 +30,15 @@ run_ci () {
   touch .perm && rm -f .perm
 
   # Running linting for all python files in the project:
-  flake8 .
+  # TODO: FUTURE
+#  flake8 .
 
   # Running type checking, see https://github.com/typeddjango/django-stubs
   mypy server tests/**/*.py
 
   # Running tests:
   pytest --dead-fixtures --dup-fixtures
-  pytest
+  pytest --cov=./ --cov-report=xml
 
   # Run checks to be sure settings are correct (production flag is required):
   DJANGO_ENV=production python manage.py check --deploy --fail-level WARNING

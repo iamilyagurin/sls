@@ -53,6 +53,13 @@ jobs:
       - name: Run ci.sh
         run: docker-compose run --rm web sh ./docker/ci.sh
 
+      - name: Upload coverage to Codecov
+          uses: codecov/codecov-action@v1
+          with:
+            token: ${{ secrets.CODECOV_TOKEN }}
+            file: ./coverage.xml
+            fail_ci_if_error: true
+
       - name: Push docker image
         run: |
           docker tag "sls:dev" "docker.pkg.github.com/iamilyagurin/sls/sls:dev"
