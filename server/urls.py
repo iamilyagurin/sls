@@ -19,8 +19,6 @@ from health_check import urls as health_urls
 from rest_framework.urlpatterns import format_suffix_patterns
 
 from server.apps.authentication.views import ObtainAuthToken
-from server.apps.main import urls as main_urls
-from server.apps.main.views import index
 
 admin.autodiscover()
 
@@ -30,8 +28,6 @@ api_urlpatterns = format_suffix_patterns([
 
 
 urlpatterns = [
-    # Apps:
-    path('main/', include(main_urls, namespace='main')),
 
     # Health checks:
     path('health/', include(health_urls)),  # noqa: DJ05
@@ -50,8 +46,6 @@ urlpatterns = [
         content_type='text/plain',
     )),
 
-    # It is a good practice to have explicit index view:
-    path('', index, name='index'),
 ] + api_urlpatterns
 
 
