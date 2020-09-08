@@ -6,7 +6,7 @@ from tests import faker
 from tests.fixtures import UserFactory
 
 
-def test_get_auth_token(transactional_db, api_client):
+def test_get_auth_token__success(transactional_db, api_client):
     password = faker.password()
     user = UserFactory.build()
     user.set_password(password)
@@ -35,3 +35,15 @@ def test_get_auth_token(transactional_db, api_client):
         }
     )
     assert response.data['token'] == token.key
+
+
+def test_get_auth_token__errors(transactional_db, api_client):
+    response = api_client.post(
+        reverse('auth-token'),
+        data={
+            'username': faker.user_name(),
+            'password': faker.password()
+        }
+    )
+    assert len(response.data['non_field_errors']) == 1
+
