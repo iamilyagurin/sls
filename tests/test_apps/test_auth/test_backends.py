@@ -10,7 +10,10 @@ def test_authenticate(db):
     user.save()
 
     assert authenticate(username=user.username, password=password) == user
+    assert authenticate(username=user.username) == None
+    assert authenticate(password=password) == None
     assert authenticate(username=faker.user_name(), password=password) == None
 
     assert authenticate(username=user.email, password=password) == user
+    assert authenticate(username=user.email) == None
     assert authenticate(username=faker.email(), password=password) == None

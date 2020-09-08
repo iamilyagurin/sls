@@ -5,18 +5,14 @@ from server.apps.authentication.models import User
 class CustomBackend(ModelBackend):
 
     def authenticate(self, request, username=None, password=None, **kwargs):
-        f_kwargs = {}
-        if username is None:
-            username = kwargs.get(User.USERNAME_FIELD)
-            f_kwargs['username'] = username
-        else:
-            if '@' in username:
-                f_kwargs['email'] = username
-            else:
-                f_kwargs['username'] = username
-
-        if not f_kwargs or password is None:
+        if username is None or password is None:
             return
+
+        f_kwargs = {}
+        if '@' in username:
+            f_kwargs['email'] = username
+        else:
+            f_kwargs['username'] = username
 
         try:
             user = User._default_manager.get(**f_kwargs)
