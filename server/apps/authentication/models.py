@@ -5,6 +5,7 @@ from django.core.mail import send_mail
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from .validators import username_validate
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -17,10 +18,10 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     username = models.CharField(
         _('username'),
-        max_length=150,
+        max_length=30,
         unique=True,
-        help_text=_('Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.'),
-        validators=[username_validator],
+        help_text=_('Required. 30 characters or fewer. Letters, digits, characters . and _'),
+        validators=[username_validate],
         error_messages={
             'unique': _("A user with that username already exists."),
         },

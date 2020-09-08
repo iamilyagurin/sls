@@ -18,12 +18,13 @@ from django.views.generic import TemplateView
 from health_check import urls as health_urls
 from rest_framework.urlpatterns import format_suffix_patterns
 
-from server.apps.authentication.views import ObtainAuthToken
+from server.apps.authentication.views import ObtainAuthToken, SignUpView
 
 admin.autodiscover()
 
 api_urlpatterns = format_suffix_patterns([
     path('auth-token/', ObtainAuthToken.as_view(), name='auth-token'),
+    path('sign-up/', SignUpView.as_view(), name='sign-up'),
 ])
 
 
