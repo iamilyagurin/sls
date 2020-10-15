@@ -21,6 +21,8 @@ ALLOWED_HOSTS = [
     'localhost',
 ]
 
+CSRF_TRUSTED_ORIGINS = [config('DOMAIN_NAME')]
+
 
 # Staticfiles
 # https://docs.djangoproject.com/en/2.2/ref/contrib/staticfiles/

@@ -20,7 +20,18 @@ ALLOWED_HOSTS = [
     'localhost',
     '0.0.0.0',  # noqa: S104
     '127.0.0.1',
+    '0.0.0.0:8000',
     '[::1]',
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    '0.0.0.0:8000'
+]
+
+
+# change to app.example.com in production settings
+CORS_ALLOWED_ORIGINS = [
+    "http://0.0.0.0:8000",
 ]
 
 

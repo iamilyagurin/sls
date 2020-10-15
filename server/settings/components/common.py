@@ -52,12 +52,16 @@ INSTALLED_APPS: Tuple[str, ...] = (
     # Third party apps
     'django_http_referrer_policy',
     'rest_framework',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
+    'corsheaders'
 )
 
 MIDDLEWARE: Tuple[str, ...] = (
     # Content Security Policy:
     'csp.middleware.CSPMiddleware',
+
+    # Corsheaders
+    'corsheaders.middleware.CorsMiddleware',
 
     # Django:
     'django.middleware.security.SecurityMiddleware',
@@ -206,3 +210,23 @@ EMAIL_TIMEOUT = 5
 
 # Custom User Model
 AUTH_USER_MODEL = 'authentication.User'
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+
+    'DEFAULT_PERMISSION_CLASSES': [
+        'server.helper.permissions.ReadOnly',
+    ]
+}
+
+
+CORS_ALLOW_CREDENTIALS = True
+
+

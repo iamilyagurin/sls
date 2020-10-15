@@ -59,7 +59,7 @@ def test_sign_up__success(db, api_client):
         'password': faker.password(),
     }
     response = api_client.post(
-        reverse('sign-up'),
+        reverse('users'),
         data=post_data
     )
     assert response.status_code == 200
@@ -68,6 +68,16 @@ def test_sign_up__success(db, api_client):
         username=post_data['username'],
         email=post_data['email'],
     ).check_password(post_data['password'])
+
+
+def test_sign_up__required_fields(db, api_client):
+    required_fields = {'email', 'username', 'password'}
+    response = api_client.post(
+        reverse('sign-up'),
+        data={}
+    )
+    assert response.status_code == 400
+    assert set(response.data) == required_fields
 
 
 def test_sign_up__fail(db, api_client):

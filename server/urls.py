@@ -16,16 +16,32 @@ from django.contrib.admindocs import urls as admindocs_urls
 from django.urls import include, path
 from django.views.generic import TemplateView
 from health_check import urls as health_urls
-from rest_framework.urlpatterns import format_suffix_patterns
 
-from server.apps.authentication.views import ObtainAuthToken, SignUpView
+from server.apps.authentication.views import ObtainAuthToken, SignUpView, UserCreateView, UserDetailView
+from server.apps.posts import views as post_v
+from server.router import CustomRouter
 
 admin.autodiscover()
 
-api_urlpatterns = format_suffix_patterns([
+router = CustomRouter()
+# router.register('posts', PostViewSet, basename='post')
+# router.register('users', UserViewSet)
+
+
+api_urlpatterns = [
+
+    path('join/', SignUpView.as_view(), name='sign-up'),
     path('auth-token/', ObtainAuthToken.as_view(), name='auth-token'),
-    path('sign-up/', SignUpView.as_view(), name='sign-up'),
-])
+    path('users/', UserCreateView.as_view(), name='users'),
+    path('users/<int:pk>/', UserDetailView.as_view(), name='user-detail'),
+
+    path('media/', post_v.MediaCreate.as_view(), name='media'),
+    path('posts/', post_v.PostCreate.as_view(), name='posts'),
+    path('posts/<uuid:pk>/', post_v.PostDetail.as_view(), name='post-detail'),
+    path('users/<int:user_id>/posts/', post_v.UserPostList.as_view(), name='user-posts'),
+
+]
+api_urlpatterns += [path('', router.get_api_root_view(api_urlpatterns))]
 
 
 urlpatterns = [
@@ -47,7 +63,8 @@ urlpatterns = [
         content_type='text/plain',
     )),
 
-] + api_urlpatterns
+    path('api/', include(api_urlpatterns + router.urls))
+]
 
 
 if settings.DEBUG:  # pragma: no cover
@@ -57,6 +74,7 @@ if settings.DEBUG:  # pragma: no cover
     urlpatterns = [
         # URLs specific only to django-debug-toolbar:
         path('__debug__/', include(debug_toolbar.urls)),  # noqa: DJ05
+        path('api-auth/', include('rest_framework.urls')),
     ] + urlpatterns + static(
         # Serving media files in development only:
         settings.MEDIA_URL,
