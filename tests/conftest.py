@@ -46,7 +46,7 @@ def _disable_axes(settings):
     settings.AXES_ENABLED = False
 
 
-# @pytest.fixture()
-# def api_client():
-#     from rest_framework.test import APIClient
-#     return APIClient()
+@pytest.fixture()
+def api_client():
+    from rest_framework.test import APIClient
+    return APIClient()
