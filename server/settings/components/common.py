@@ -229,4 +229,6 @@ REST_FRAMEWORK = {
 
 CORS_ALLOW_CREDENTIALS = True
 
-
+DTM_IGNORED_MIGRATIONS = (
+    ('rest_framework.authtoken', '*'),
+)

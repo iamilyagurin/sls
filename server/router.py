@@ -1,11 +1,13 @@
 from collections import OrderedDict
+from typing import List, Optional
 
+from django.urls.resolvers import URLPattern
 from rest_framework import routers
 
 
 class CustomRouter(routers.SimpleRouter):
 
-    def get_api_root_view(self, api_urls=None):
+    def get_api_root_view(self, api_urls:Optional[List[URLPattern]]=None):
         """
         Return a basic root view.
         """

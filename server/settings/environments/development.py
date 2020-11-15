@@ -41,7 +41,6 @@ INSTALLED_APPS += (
     'debug_toolbar',
     'nplusone.ext.django',
     'django_migration_linter',
-    'django_test_migrations.contrib.django_checks.AutoNames',
 )
 
 

@@ -1,7 +1,8 @@
 from rest_framework import permissions
+from rest_framework.request import Request
 
 
-def is_safe(request):
+def is_safe(request: Request):
     return request.method in permissions.SAFE_METHODS
 
 

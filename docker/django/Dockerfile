@@ -37,6 +37,7 @@ RUN apt-get update \
     git \
     libpq-dev \
     wget \
+    libmagic1 \
   # Cleaning cache:
   && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* \
   # Installing `dockerize` utility:
