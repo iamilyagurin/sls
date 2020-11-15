@@ -40,6 +40,12 @@ def _templates_debug(settings):
         template['OPTIONS']['debug'] = True
 
 
+@pytest.fixture(autouse=True)
+def _disable_axes(settings):
+    """Activates TEMPLATE debug mode for coverage."""
+    settings.AXES_ENABLED = False
+
+
 @pytest.fixture()
 def api_client():
     from rest_framework.test import APIClient

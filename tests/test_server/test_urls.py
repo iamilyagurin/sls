@@ -2,6 +2,7 @@
 import pytest
 
 
+@pytest.mark.django_db
 def test_admin_unauthorized(client):
     """This test ensures that admin panel requires auth."""
     response = client.get('/admin/')
@@ -17,6 +18,7 @@ def test_health_check(client):
     assert response.status_code == 200
 
 
+@pytest.mark.django_db
 def test_admin_authorized(admin_client):
     """This test ensures that admin panel is accessible."""
     response = admin_client.get('/admin/')
@@ -24,6 +26,7 @@ def test_admin_authorized(admin_client):
     assert response.status_code == 200
 
 
+@pytest.mark.django_db
 def test_admin_docs_unauthorized(client):
     """This test ensures that admin panel docs requires auth."""
     response = client.get('/admin/doc/')
@@ -31,6 +34,7 @@ def test_admin_docs_unauthorized(client):
     assert response.status_code == 302
 
 
+@pytest.mark.django_db
 def test_admin_docs_authorized(admin_client):
     """This test ensures that admin panel docs are accessible."""
     response = admin_client.get('/admin/doc/')
@@ -39,6 +43,7 @@ def test_admin_docs_authorized(admin_client):
     assert b'docutils' not in response.content
 
 
+@pytest.mark.django_db
 def test_robots_txt(client):
     """This test ensures that `robots.txt` is accessible."""
     response = client.get('/robots.txt')
@@ -47,6 +52,7 @@ def test_robots_txt(client):
     assert response.get('Content-Type') == 'text/plain'
 
 
+@pytest.mark.django_db
 def test_humans_txt(client):
     """This test ensures that `humans.txt` is accessible."""
     response = client.get('/humans.txt')
